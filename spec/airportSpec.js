@@ -31,4 +31,24 @@ describe('airport', function() {
     expect(plane.isFlying()).toBe(true)
   });
 
+  it('should throw error if plane already landed', function() {
+    airport.receivePlane(plane);
+    expect(function() {
+      airport.receivePlane(plane)
+    }).toThrow("Plane already landed");
+  });
+
+  it('should throw an error if plane is already flying', function(){
+    expect(function() {
+      airport.takeOffPlane(plane)
+    }).toThrow("Plane already flying");
+  });
+
+  it('should throw error if trying to takeoff but not at airport', function(){
+    airport2 = new Airport
+    airport2.receivePlane(plane)
+    expect(function() {
+      airport.takeOffPlane(plane)
+    }).toThrow("Plane not at airport");
+  });
 });
