@@ -8,6 +8,8 @@ Airport.prototype = {
   receivePlane: function(plane) {
     if (this.planes.length >= this._capacity) {
       throw 'Airport up to capacity';
+    } else if (!this.isWeatherClear()) {
+      throw "Can't land due to stormy weather"
     } else if (plane.isFlying()) {
         this.planes.push(plane);
         plane.land();
@@ -26,5 +28,9 @@ Airport.prototype = {
     } else {
       throw "Plane not at airport";
     }
+  },
+  isWeatherClear: function() {
+    var weather = new Weather;
+    return weather.isClear();
   }
 }

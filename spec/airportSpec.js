@@ -3,6 +3,7 @@ describe('airport', function() {
   beforeEach(function(){
     airport = new Airport;
     plane = new Plane;
+    airport.isWeatherClear = jasmine.createSpy("isWeatherClear() spy").and.returnValue(true)
   });
 
   it('should have no planes', function() {
@@ -46,6 +47,7 @@ describe('airport', function() {
 
   it('should throw error if trying to takeoff but not at airport', function(){
     airport2 = new Airport
+    airport2.isWeatherClear = jasmine.createSpy("clear weather").and.returnValue(true)
     airport2.receivePlane(plane)
     expect(function() {
       airport.takeOffPlane(plane)
@@ -58,11 +60,19 @@ describe('airport', function() {
 
   it('plane can\'t land if airport is up to capacity', function() {
     smallAirport = new Airport(1)
+    smallAirport.isWeatherClear = jasmine.createSpy("clear weather").and.returnValue(true)
     boeing = new Plane;
     smallAirport.receivePlane(plane);
     expect(function() {
       smallAirport.receivePlane(boeing)
     }).toThrow('Airport up to capacity');
   });
+
+it('should raise an error when landing and stomry', function() {
+  airport.isWeatherClear = jasmine.createSpy("stormy weather").and.returnValue(false);
+  expect(function() {
+    airport.receivePlane(plane)
+  }).toThrow("Can't land due to stormy weather");
+});
 
 });
