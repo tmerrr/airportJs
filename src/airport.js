@@ -1,14 +1,18 @@
-function Airport() {
+function Airport(capacity) {
+  const standardCapacity = 50;
+  this._capacity = capacity || standardCapacity;
   this.planes = [];
 }
 
 Airport.prototype = {
   receivePlane: function(plane) {
-    if (plane.isFlying()) {
-      this.planes.push(plane);
-      plane.land();
+    if (this.planes.length >= this._capacity) {
+      throw 'Airport up to capacity';
+    } else if (plane.isFlying()) {
+        this.planes.push(plane);
+        plane.land();
     } else {
-      throw "Plane already landed";
+        throw "Plane already landed";
     }
   },
 

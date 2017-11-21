@@ -51,4 +51,18 @@ describe('airport', function() {
       airport.takeOffPlane(plane)
     }).toThrow("Plane not at airport");
   });
+
+  it('airport is created with a capacity', function() {
+    expect(airport._capacity).toEqual(50);
+  });
+
+  it('plane can\'t land if airport is up to capacity', function() {
+    smallAirport = new Airport(1)
+    boeing = new Plane;
+    smallAirport.receivePlane(plane);
+    expect(function() {
+      smallAirport.receivePlane(boeing)
+    }).toThrow('Airport up to capacity');
+  });
+
 });
